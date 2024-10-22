@@ -9,7 +9,12 @@ def json_response(func):
     def wrapper(*args, **kwargs):
         try:
             result = func(*args, **kwargs)
-            return Response(result.json(), mimetype='application/json')
+            if isinstance(result, list):
+                return jsonify([model.dict() for model in result])
+            elif isinstance(result, dict):
+                return jsonify(result)
+            else:
+                return Response(result.json(), mimetype='application/json')
         except WebChatApiError as e:
             return jsonify({"message": str(e)}), e.status_code
         except Exception as e:

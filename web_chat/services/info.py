@@ -1,4 +1,4 @@
-from ..dto.info_schemas import AppInfoSchema
+from ..dto.info import AppInfoSchema
 from .. import __version__
 
 class InfoServices:

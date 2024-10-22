@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import select
 from ..orm.users import UserModel
-from ..dto.user import User
 from typing import Optional
 
 class UserRepository:
@@ -9,16 +8,18 @@ class UserRepository:
         self.session = session
     
     def get_user_by_name(self, username: str) -> Optional[UserModel]:
-        user = self.session.scalars(
+        user = self.session.execute(
             select(UserModel).where(UserModel.username == username)
-        ).one_or_none()
+        ).scalars().one_or_none()
         return user
     
-    def add_user(self, data: User) -> UserModel:
-        user = UserModel(
-            username = data.username,
-            hash_password = data.hash_password
-        )
+    def get_user_by_id(self, id: int) -> Optional[UserModel]:
+        user = self.session.execute(
+            select(UserModel).where(UserModel.id == id)
+        ).scalars().one_or_none()
+        return user
+    
+    def add_user(self, user: UserModel) -> UserModel:
         self.session.add(user)
         self.session.commit()
         return user

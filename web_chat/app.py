@@ -10,6 +10,7 @@ app = Flask(__name__)
 
 app.config["JWT_SECRET_KEY"] = "PekvHCqYpCYvNpJ44qSDfQlNuBqWKBut"  #  Замените  на  настоящий  секретный  ключ
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = datetime.timedelta(minutes=30)
+app.config["JWT_REFRESH_TOKEN_EXPIRES"] = datetime.timedelta(days=30)
 jwt = JWTManager(app)
 
 def run_server():

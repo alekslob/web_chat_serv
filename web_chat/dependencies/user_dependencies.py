@@ -1,10 +1,11 @@
-from ..services.auth import AuthServices
+from ..services.user import UserService
 from ..repositories.user import UserRepository
 from .user_repository_dependencies import extract_user_repository
 
-def extract_auth_services(
+
+def extract_user_services(
         user_repository: UserRepository = extract_user_repository()
-)-> AuthServices:
-    return AuthServices(
+)-> UserService:
+    return UserService(
         user_repository=user_repository
     )

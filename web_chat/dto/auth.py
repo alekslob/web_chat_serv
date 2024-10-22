@@ -6,3 +6,4 @@ class AuthSchema(BaseModel):
 
 class AuthResponse(BaseModel):
     token: str
+    refresh_token: str

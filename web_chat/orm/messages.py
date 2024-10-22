@@ -7,7 +7,7 @@ from . import Base
 
 class MessageModel(Base):
     __tablename__ = 'messages'
-    content = Mapped[str]
+    content: Mapped[str] = mapped_column(nullable=True)
     create_time: Mapped[datetime]
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     user: Mapped["UserModel"] = relationship(
