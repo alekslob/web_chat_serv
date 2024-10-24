@@ -4,7 +4,7 @@ from .ext.parametrica.parametrica.io import YAMLFileConfigIO, VirtualYAMLFileCon
 from .consts import SETTINGS_FILE_NAME
 
 class ServerSettings(Fieldset):
-    host = AnyHostField("0.0.0.0").label("Адрес сервера")
+    host = AnyHostField("0.0.0.0").label("Адрес сервера").secret()
     port = PortField(8000).label("Порт сервера")
     access_token_lifetime = Field[int](30).label('Время жизни токена (в минутах)')
 
