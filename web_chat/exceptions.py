@@ -1,20 +1,23 @@
 
-class WebChatError(Exception):
+class WebChatException(Exception):
     '''Базовое исключение'''
 
-class WebChatApiError(WebChatError):
+class WebChatApiException(WebChatException):
     '''Базовое исключение для реквестов'''
     status_code = 400
 
 
-class ValidationModelError(WebChatApiError):
+class ValidationException(WebChatApiException):
     '''Ошибка валидации'''
 
-class UserNotFoundException(WebChatApiError):
+class UserNotFound(WebChatApiException):
     '''Не найден пользователь'''
     
-class UserAlreadyExists(WebChatApiError):
+class UserAlreadyExists(WebChatApiException):
     '''Нельзя создать пользователя с такими же данными'''
 
-class PasswordError(WebChatApiError):
+class PasswordError(WebChatApiException):
     '''Неверный пароль'''
+
+class TokenException(WebChatApiException):
+    '''Ошибка с токеном'''

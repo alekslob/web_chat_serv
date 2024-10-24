@@ -2,7 +2,7 @@ from flask import Response, jsonify, request
 from functools import wraps
 from pydantic import ValidationError, BaseModel
 
-from ..exceptions import WebChatApiError, ValidationModelError
+from ..exceptions import WebChatApiException, ValidationException
 
 def json_response(func):
     @wraps(func)
@@ -15,7 +15,7 @@ def json_response(func):
                 return jsonify(result)
             else:
                 return Response(result.json(), mimetype='application/json')
-        except WebChatApiError as e:
+        except WebChatApiException as e:
             return jsonify({
                 "class_error": e.__class__.__name__,
                 "message": str(e)}), e.status_code
@@ -33,6 +33,6 @@ def validate(model):
                 kwargs[model.__name__.lower()] = model(**data)
                 return func(*args, **kwargs)
             except ValidationError as e:
-                raise ValidationModelError(e)
+                raise ValidationException(e)
         return wrapper
     return decorator

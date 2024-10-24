@@ -3,6 +3,7 @@ __version__ = (0, 0, 0, 1)
 from loguru import logger
 from .app import run_server
 from .orm import migrate
+
 def start():
     try:
         logger.info("Запуск миграций")
