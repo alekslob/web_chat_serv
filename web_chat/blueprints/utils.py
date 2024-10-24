@@ -16,7 +16,9 @@ def json_response(func):
             else:
                 return Response(result.json(), mimetype='application/json')
         except WebChatApiError as e:
-            return jsonify({"message": str(e)}), e.status_code
+            return jsonify({
+                "class_error": e.__class__.__name__,
+                "message": str(e)}), e.status_code
         except Exception as e:
             return jsonify({"message": str(e)}), 400
     return wrapper

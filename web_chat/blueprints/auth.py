@@ -21,10 +21,8 @@ def user_login(authschema: AuthSchema, services: AuthServices = extract_auth_ser
     return services.login(authschema)
 
 @auth.route('refresh/', methods=['POST'])
+@json_response
 @jwt_required(refresh=True)
-def refresh():
+def refresh(services: AuthServices = extract_auth_services()):
     id = get_jwt_identity()
-    new_token = create_access_token(identity=id, fresh=False)
-    resp = jsonify({'refresh': True})
-    set_access_cookies(resp, new_token)
-    return resp, 200
+    return services.check_token(id)
