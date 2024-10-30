@@ -2,6 +2,9 @@
 class WebChatException(Exception):
     '''Базовое исключение'''
 
+class ConfigurationException(WebChatException):
+    '''Не заполнен или отстутствует файл конфигурации'''
+
 class WebChatApiException(WebChatException):
     '''Базовое исключение для реквестов'''
     status_code = 400
