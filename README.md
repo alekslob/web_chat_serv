@@ -39,5 +39,3 @@ DB_NAME = 'webchat'
 
 ## Папка Static
 Содержит скомпилированный код [веб-интерфейса](https://github.com/alekslob/web_chat_front). 
-## Сторонние модули:
-- [Parametrica](https://github.com/FosterToster/parametrica) - Библиотека для работы с конфигурацией проекта.
