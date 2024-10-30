@@ -26,11 +26,6 @@ DB_NAME = 'webchat'
    ```
    pip install -r requirements.txt
    ```
-5. Обновите подмодули
-   ```
-   git submodule init
-   git submodule update
-   ```
 7. Запустите проект
    ```
    python run.py
