@@ -5,6 +5,9 @@ from .consts import SECRET_KEY
 from .config import config
 from .blueprints import api_blueprints
 from .exceptions import ConfigurationException
+
+from flask_cors import CORS
+
 app = Flask(__name__, static_url_path='', static_folder='../static')
 from loguru import logger
 # конфигурация для токенов
@@ -27,6 +30,20 @@ def index(path):
         return send_from_directory('../static', path)
     return send_from_directory('../static', 'index.html')
 
+from flask_swagger_ui import get_swaggerui_blueprint
+
+SWAGGER_URL = '/docs'
+API_URL = '/swagger.json'
+
+swagger_ui_blueprint = get_swaggerui_blueprint(
+   SWAGGER_URL,
+   API_URL,
+   config={
+       'app_name': 'My App'
+   }
+)
+CORS(app)
+app.register_blueprint(swagger_ui_blueprint)
 # запуск сервера
 def run_server():
    

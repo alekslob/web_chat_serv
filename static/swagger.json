@@ -1,0 +1,260 @@
+{
+    "openapi":"3.0.2",
+    "info": {
+        "description":"\n## API веб-чата.\n\n### Методы\n\n* Получение токена аутентификации\n* Отправка сообщений.\n\n### Примечания\n\n* Для взаимодействия с API необходима авторизация\n",
+        "version": "1.0.5",
+        "title": "Web-Chat"
+    },
+    "tags": [
+        {
+            "name": "Инфо",
+            "description": "Информация о приложении"
+        },
+        {
+            "name": "Авторизация",
+            "description": "Авторизация пользователей"
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+    "paths": {
+        "/info/app/": {
+            "get": {
+                "tags": [
+                    "Инфо"
+                ],
+                "summary": "Информация о приложении",
+                "operationId": "autocompletion",
+                "parameters": [
+                    
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/info/user/": {
+            "get": {
+                "tags": [
+                    "Авторизация"
+                ],
+                "summary": "Информация о пользователе",
+                "operationId": "explain",
+                "parameters": [
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Missing Authorization Header"
+                    },
+                    "503": {
+                        "description": "Service unavailable"
+                    }
+                }
+            }
+        },
+        "/auth/":{
+            "post":{
+                "tags": [ "Авторизация" ],
+                "summary": "Регистрация пользователя",
+                "operationId": "auth",
+                "parameters": [
+                    {
+                        "name": "Request body",
+                        "in": "body",
+                        "description": "text or sentence",
+                        "required": true,
+                        "properties": {
+                            "username": {
+                                "type": "string",
+                                "example": "user"
+                            },
+                            "password": {
+                                "type": "string",
+                                "example": "user"
+                            }
+                        }
+                    }
+                ],
+                "responses":{
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Missing parameter"
+                    },
+                    "503": {
+                        "description": "Service unavailable"
+                    }
+                }
+            }
+        },
+        "/preprocess": {
+            "post": {
+                "tags": [
+                    "Graph Database"
+                ],
+                "summary": "Extract keywords from the given text",
+                "operationId": "preprocess",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "description": "text or sentence",
+                        "required": true,
+                        "properties": {
+                            "text": {
+                                "type": "string",
+                                "example": "bert attention natural language processing"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Missing parameter"
+                    },
+                    "503": {
+                        "description": "Service unavailable"
+                    }
+                }
+            }
+        },
+        "/facts": {
+            "get": {
+                "tags": [
+                    "Graph Database"
+                ],
+                "summary": "List of facts",
+                "operationId": "facts",
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "query keywords",
+                        "required": true,
+                        "example": "bert"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Missing parameter"
+                    },
+                    "503": {
+                        "description": "Service unavailable"
+                    }
+                }
+            }
+        },
+        "/graph": {
+            "get": {
+                "tags": [
+                    "Graph Database"
+                ],
+                "summary": "Graph for visualization",
+                "operationId": "graph",
+                "parameters": [
+                    {
+                        "name": "arxiv_id",
+                        "in": "query",
+                        "description": "Arxiv id of the paper",
+                        "required": true,
+                        "example": "1810.04805"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Expected number of relations",
+                        "required": false,
+                        "example": "30"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Missing parameter"
+                    },
+                    "503": {
+                        "description": "Service unavailable"
+                    }
+                }
+            }
+        },
+        "/kwGraph": {
+            "get": {
+                "tags": [
+                    "Graph Database"
+                ],
+                "summary": "Graph path(kw->paper) for visualization",
+                "operationId": "kwGraph",
+                "parameters": [
+                    {
+                        "name": "keys",
+                        "in": "query",
+                        "description": "Search keywords",
+                        "required": true,
+                        "example": "bert"
+                    },
+                    {
+                        "name": "arxiv_id",
+                        "in": "query",
+                        "description": "Arxiv id of the paper",
+                        "required": true,
+                        "example": "1810.04805"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Expected number of relations",
+                        "required": false,
+                        "example": "30"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Missing parameter"
+                    },
+                    "503": {
+                        "description": "Service unavailable"
+                    }
+                }
+            }
+        }
+    },
+    "securitySchemes": {
+        "cookieAuth": {
+            "type": "apiKey",
+            "in": "cookie",
+            "name": "SigToken"
+        }
+    },
+    "definitions": {
+        "user": {
+            "type": "object",
+            "properties": {
+                "username": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
